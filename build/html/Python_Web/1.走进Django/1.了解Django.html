@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.1. 了解Django &mdash; Django+Vue.js实战派,Python Web开发与运维</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.2. 安装Django" href="2.%E5%AE%89%E8%A3%85Django.html" />
+    <link rel="prev" title="1. 1.走进Django" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Django+Vue.js 实战派,Python Web开发与运维
+            <img src="../../_static/my_python_web.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Django+Vue.js实战派-Python Web</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 1.走进Django</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.1. 了解Django</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.1.1. 1. Django的发展历史和版本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mvcmtv">1.1.2. 2. MVC和MTV</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="2.%E5%AE%89%E8%A3%85Django.html">1.2. 安装Django</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.%E7%94%A8VS_Code%E7%BC%96%E8%BE%91%E5%99%A8%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91.html">1.3. 用VS_Code编辑器进行开发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.Django%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%BF%90%E8%A1%8C%E5%92%8C%E8%B0%83%E8%AF%95.html">1.4. Django项目的运行和测试</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.%E7%BD%91%E7%AB%99%E7%9A%84%E5%85%A5%E5%8F%A3-Django%E7%9A%84%E8%B7%AF%E7%94%B1%E5%92%8C%E8%A7%86%E5%9B%BE/index.html">2. 2.网站的入口-Django的路由和视图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%8E%B0-%E5%9F%BA%E4%BA%8EDjango%E6%A8%A1%E6%9D%BF/index.html">3. 3.页面展现-基于Django模板</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Django+Vue.js 实战派,Python Web开发与运维</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Django+Vue.js实战派-Python Web</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>1.走进Django</a> &raquo;</li>
+      <li><span class="section-number">1.1. </span>了解Django</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Python_Web/1.走进Django/1.了解Django.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#django" id="id2">了解Django</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id3">1. Django的发展历史和版本</a></p></li>
+<li><p><a class="reference internal" href="#mvcmtv" id="id4">2. MVC和MTV</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mvc3" id="id5">2.1 MVC模式的3个层次</a></p></li>
+<li><p><a class="reference internal" href="#mtv" id="id6">2.2 MTV模式</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="django">
+<h1><a class="toc-backref" href="#id2"><span class="section-number">1.1. </span>了解Django</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h1>
+<p><em>基础知识部分进行简短描述</em></p>
+<section id="id1">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">1.1.1. </span>1. Django的发展历史和版本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="mvcmtv">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">1.1.2. </span>2. MVC和MTV</a><a class="headerlink" href="#mvcmtv" title="Permalink to this headline">¶</a></h2>
+<section id="mvc3">
+<h3><a class="toc-backref" href="#id5">2.1 MVC模式的3个层次</a><a class="headerlink" href="#mvc3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>模型 （Model）</p></li>
+<li><p>模板 （Template）</p></li>
+<li><p>控制器 （Controller）</p></li>
+</ul>
+</section>
+<section id="mtv">
+<h3><a class="toc-backref" href="#id6">2.2 MTV模式</a><a class="headerlink" href="#mtv" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>模型 （Model）</p></li>
+<li><p>模板 （Template）</p></li>
+<li><p>视图（view）</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="1. 1.走进Django" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2.%E5%AE%89%E8%A3%85Django.html" class="btn btn-neutral float-right" title="1.2. 安装Django" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

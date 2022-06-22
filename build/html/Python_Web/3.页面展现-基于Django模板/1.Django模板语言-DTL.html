@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.1. Django模板语言-DTL &mdash; Django+Vue.js实战派,Python Web开发与运维</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="3. 3.页面展现-基于Django模板" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Django+Vue.js 实战派,Python Web开发与运维
+            <img src="../../_static/my_python_web.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Django+Vue.js实战派-Python Web</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.%E8%B5%B0%E8%BF%9BDjango/index.html">1. 1.走进Django</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2.%E7%BD%91%E7%AB%99%E7%9A%84%E5%85%A5%E5%8F%A3-Django%E7%9A%84%E8%B7%AF%E7%94%B1%E5%92%8C%E8%A7%86%E5%9B%BE/index.html">2. 2.网站的入口-Django的路由和视图</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. 3.页面展现-基于Django模板</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.1. Django模板语言-DTL</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.1.1. 1.模板变量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">3.1.2. 2.模板标签</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">3.1.3. 3. 模板的高级用法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">3.1.4. 4.【实战】自定义过滤器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">3.1.5. 5.【实战】自定义标签</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Django+Vue.js 实战派,Python Web开发与运维</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Django+Vue.js实战派-Python Web</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">3. </span>3.页面展现-基于Django模板</a> &raquo;</li>
+      <li><span class="section-number">3.1. </span>Django模板语言-DTL</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Python_Web/3.页面展现-基于Django模板/1.Django模板语言-DTL.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#django-dtl" id="id15">Django模板语言-DTL</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id16">1.模板变量</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id17">2.模板标签</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id18">2.1 条件判断模板标签</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id19">2.2 循环模板便签</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id20">2.3 模板过滤器</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id6" id="id21">3. 模板的高级用法</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id7" id="id22">3.1 模板转义</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id8" id="id23">4.【实战】自定义过滤器</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id9" id="id24">4.1 准备工作</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id25">4.2 编写自定义过滤器并注册</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id26">4.3 加载自定义过滤器并编写模板</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id12" id="id27">5.【实战】自定义标签</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id13" id="id28">5.1 简单标签</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id29">5.2 包含标签</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="django-dtl">
+<h1><a class="toc-backref" href="#id15"><span class="section-number">3.1. </span>Django模板语言-DTL</a><a class="headerlink" href="#django-dtl" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id16"><span class="section-number">3.1.1. </span>1.模板变量</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><strong>1. 模板变量的表示</strong></p>
+<ol class="arabic simple">
+<li><p>模板比那里使用“{{ 变量名 }}”来表示。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>我的姓名 {{ name }}，我的年龄{{ age }}
+</pre></div>
+</div>
+<p>（2）模板变量还可以是列表、字典以及类对象</p>
+<p><strong>2. 实例</strong></p>
+<p>（1）<code class="docutils literal notranslate"><span class="pre">app3/views.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+<span class="k">def</span> <span class="nf">var</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># v=PersonInfo.objects.all()</span>
+    <span class="c1"># print(v)</span>
+    <span class="c1"># 列表对象</span>
+    <span class="n">lists</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;JavaScript&#39;</span><span class="p">]</span>
+    <span class="c1"># 字典对象</span>
+    <span class="n">dicts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;姓名&#39;</span><span class="p">:</span> <span class="s1">&#39;张三&#39;</span><span class="p">,</span> <span class="s1">&#39;年龄&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;性别&#39;</span><span class="p">:</span> <span class="s1">&#39;男&#39;</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;3/var.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;lists&#39;</span><span class="p">:</span> <span class="n">lists</span><span class="p">,</span> <span class="s1">&#39;dicts&#39;</span><span class="p">:</span> <span class="n">dicts</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>render()函数传给模板文件的模板变量名称就是字典的键名称，这样在字典中就可以用这个字典的键名称了。</p>
+<p>（2）<code class="docutils literal notranslate"><span class="pre">templates/3/var.html</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span> <span class="n">lists</span> <span class="p">}}</span>
+<span class="o">&lt;</span><span class="n">table</span> <span class="n">border</span><span class="o">=</span><span class="mi">1</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">lists</span><span class="o">.</span><span class="mi">0</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">lists</span><span class="o">.</span><span class="mi">1</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">lists</span><span class="o">.</span><span class="mi">2</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">lists</span><span class="o">.</span><span class="mi">3</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">lists</span><span class="o">.</span><span class="mi">4</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">br</span><span class="o">&gt;</span>
+<span class="p">{{</span> <span class="n">dicts</span> <span class="p">}}</span>
+<span class="o">&lt;</span><span class="n">table</span> <span class="n">border</span><span class="o">=</span><span class="mi">1</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">dicts</span><span class="o">.</span><span class="n">姓名</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">dicts</span><span class="o">.</span><span class="n">年龄</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">dicts</span><span class="o">.</span><span class="n">性别</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>（2） 编写路由，<code class="docutils literal notranslate"><span class="pre">app3/urls.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+<span class="kn">from</span> <span class="nn">app3</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app3/var/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">var</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>然后访问:<a class="reference external" href="http://127.0.0.1:8000/app3/var/">http://127.0.0.1:8000/app3/var/</a></p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id17"><span class="section-number">3.1.2. </span>2.模板标签</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://www.yuque.com/bucea/tb5c6d/gvi5wd#ef4a9db8">https://www.yuque.com/bucea/tb5c6d/gvi5wd#ef4a9db8</a></p>
+<p><a class="reference external" href="https://docs.djangoproject.com/zh-hans/3.2/ref/templates/builtins/#include">https://docs.djangoproject.com/zh-hans/3.2/ref/templates/builtins/#include</a></p>
+<section id="id3">
+<h3><a class="toc-backref" href="#id18">2.1 条件判断模板标签</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>条件判断模板标签用于条件判断，由{% if %}和{% endif
+%}标签组合的闭合标签。该标签中还可以包含{% elif %}和{% else %}标签。</p>
+<p>（1） 条件判断模板标签一般用法如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">条件1</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">{{</span> <span class="n">内容1</span> <span class="p">}}</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">elif</span> <span class="n">条件2</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">{{</span> <span class="n">内容2</span> <span class="p">}}</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">else</span>  <span class="o">%</span><span class="p">}</span>
+    <span class="p">{{</span> <span class="n">默认内容</span> <span class="p">}}</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>（2）条件判断模板标签的使用</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{% if age &lt; 18 %}
+    &lt;p&gt; 还未成年 &lt;/p&gt;
+{% elif age == 18 %}
+    &lt;p&gt;恭喜&lt;/p&gt;
+{% else %}
+    &lt;p&gt;你成年了，亚历山大&lt;/p&gt;
+{% endif %}
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id19">2.2 循环模板便签</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>循环浏览数组中的每个项目，使该项目在上下文变量中可用。例如，要显示
+<code class="docutils literal notranslate"><span class="pre">athlete_list</span></code> 中提供的运动员列表：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">athlete</span> <span class="ow">in</span> <span class="n">athlete_list</span> <span class="o">%</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">athlete</span><span class="o">.</span><span class="n">name</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>如果你需要访问字典中的项目，这也很有用。例如，如果你的上下文中包含一个字典
+<code class="docutils literal notranslate"><span class="pre">data</span></code>，下面将显示该字典的键和值：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">{{</span> <span class="n">key</span> <span class="p">}}:</span> <span class="p">{{</span> <span class="n">value</span> <span class="p">}}</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>for 循环设置了一组可以在循环体内直接使用的变量：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>变量名</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">forloop.counter</span></code></p></td>
+<td><p>循环计数器，表示当前循环的索引（从 <code class="docutils literal notranslate"><span class="pre">1</span></code>
+开始）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">forloop.counter0</span></code></p></td>
+<td><p>循环计数器，表示当前循环的索引（从 <code class="docutils literal notranslate"><span class="pre">0</span></code>
+开始）。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">forloop.revcounter</span></code></p></td>
+<td><p>反向循环计数器（以最后一次循环为
+<code class="docutils literal notranslate"><span class="pre">1</span></code>，反向计数）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">forloop.revcounter0</span></code></p></td>
+<td><p>反向循环计数器（以最后一次循环为
+<code class="docutils literal notranslate"><span class="pre">0</span></code>，反向计数）。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">forloop.first</span></code></p></td>
+<td><p>当前循环为首个循环时，该变量为 True</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">forloop.last</span></code></p></td>
+<td><p>当前循环为最后一个循环时，该变量为 True</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">forloop.parentloop</span></code></p></td>
+<td><p>在嵌套循环中，指向当前循环的上级循环</p></td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">app3/views.py</span></code></p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+<span class="k">def</span> <span class="nf">for_label</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;书名&#39;</span><span class="p">:</span> <span class="s1">&#39;Django开发&#39;</span><span class="p">,</span> <span class="s1">&#39;价格&#39;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span> <span class="s1">&#39;作者&#39;</span><span class="p">:</span> <span class="s1">&#39;张三&#39;</span><span class="p">}</span>
+    <span class="n">dict2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;书名&#39;</span><span class="p">:</span> <span class="s1">&#39;Python开发&#39;</span><span class="p">,</span> <span class="s1">&#39;价格&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="s1">&#39;作者&#39;</span><span class="p">:</span> <span class="s1">&#39;李四&#39;</span><span class="p">}</span>
+    <span class="n">dict3</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;书名&#39;</span><span class="p">:</span> <span class="s1">&#39;Java开发&#39;</span><span class="p">,</span> <span class="s1">&#39;价格&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;作者&#39;</span><span class="p">:</span> <span class="s1">&#39;王五&#39;</span><span class="p">}</span>
+    <span class="n">lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">dict1</span><span class="p">,</span> <span class="n">dict2</span><span class="p">,</span> <span class="n">dict3</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;3/for_label.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;lists&#39;</span><span class="p">:</span> <span class="n">lists</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>(2)<code class="docutils literal notranslate"><span class="pre">templates/3/for_label.html</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;table border=1&gt;
+    {% for list in lists %}
+        {% if forloop.first %}&lt;!-- 如果是第一条记录--&gt;
+        &lt;tr&gt;
+            &lt;td&gt;第一个值：{{ list.书名 }}&lt;/td&gt;
+        &lt;/tr&gt;
+        {% endif%}
+        &lt;tr&gt;
+            &lt;td&gt;当前值：{{ list.书名 }}，价格：{{ list.价格 }}，当前正序索引{{ forloop.counter0 }}，当前倒序索引{{ forloop.revcounter0 }}&lt;/td&gt;
+        &lt;/tr&gt;
+        {% if forloop.last %}&lt;!-- 如果是最后一条记录--&gt;
+        &lt;tr&gt;
+            &lt;td&gt;最后一个值：{{ list.书名 }}&lt;/td&gt;
+        &lt;/tr&gt;
+        {% endif%}
+    {% endfor %}
+&lt;/table&gt;
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>编写路由规则<code class="docutils literal notranslate"><span class="pre">app3/urls.py</span></code></p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+<span class="kn">from</span> <span class="nn">app3</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app3/for_label&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">for_label</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>运行访问：<a class="reference external" href="http://127.0.0.1:8000/app3/for_label">http://127.0.0.1:8000/app3/for_label</a></p></li>
+</ol>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id20">2.3 模板过滤器</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>使用管道符号|来应用过滤器，用于进行计算、转换操作，可以使用在变量、标签中。</p></li>
+<li><p>如果过滤器需要参数，则使用冒号:传递参数。</p></li>
+</ul>
+<p>参考文献：<a class="reference external" href="https://www.yuque.com/bucea/tb5c6d/ev8ion">https://www.yuque.com/bucea/tb5c6d/ev8ion</a></p>
+<p>（1）<code class="docutils literal notranslate"><span class="pre">app3/views.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+<span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># 定义网址</span>
+    <span class="c1"># url_addr=&quot;&lt;table border=1&gt;&lt;tr&gt;&lt;td&gt;这是一个表格&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&quot;;</span>
+    <span class="n">str1</span> <span class="o">=</span> <span class="s2">&quot;abcdefg&quot;</span>
+    <span class="n">str2</span> <span class="o">=</span> <span class="s2">&quot;ABCDEFG&quot;</span>
+    <span class="n">slice_str</span> <span class="o">=</span> <span class="s2">&quot;1234567890&quot;</span>
+    <span class="n">time_str</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;3/filter.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;str1&quot;</span><span class="p">:</span> <span class="n">str1</span><span class="p">,</span> <span class="s2">&quot;str2&quot;</span><span class="p">:</span> <span class="n">str2</span><span class="p">,</span> <span class="s2">&quot;slice_str&quot;</span><span class="p">:</span> <span class="n">slice_str</span><span class="p">,</span> <span class="s2">&quot;time_str&quot;</span><span class="p">:</span> <span class="n">time_str</span><span class="p">})</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>新建模板文件<code class="docutils literal notranslate"><span class="pre">templates/3/filter.html</span></code></p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>小写转大写：{{ str1|upper }}&lt;br&gt;
+大写转小写：{{ str2|lower }}&lt;br&gt;
+切片操作：{{ slice_str|slice:&quot;2:4&quot; }}&lt;br&gt;
+时间格式化：{{ time_str|date:&quot;Y-m-d G:i:s&quot; }}&lt;br&gt;
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>编写路由规则 <code class="docutils literal notranslate"><span class="pre">app3/urls.py</span></code></p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+<span class="kn">from</span> <span class="nn">app3</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app3/filter/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">filter</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>应用运行后访问：<a class="reference external" href="http://127.0.0.1:8000/app3/filter/">http://127.0.0.1:8000/app3/filter/</a></p></li>
+</ol>
+</section>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id21"><span class="section-number">3.1.3. </span>3. 模板的高级用法</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<section id="id7">
+<h3><a class="toc-backref" href="#id22">3.1 模板转义</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>Django的模板会对HTML标签和Javascript标签进行自动转义，这样做事未了代码的安全。</p>
+<p>例如：Django会将JavaScript脚本代码中的一些字符自动转义，如将“&lt;”转换为“&amp;lt”，将“
+’ ’”转换为“&amp;#39”。</p>
+<p>可以使用“模板变量|safe”的方式告诉Django这段代码是安全的，不需要转义（即关闭模板转义）。</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">app3/views.py</span></code>中新增视图函数。</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">def</span> <span class="nf">html_filter</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+   <span class="n">html_addr</span><span class="o">=</span><span class="s2">&quot;&lt;table border=1&gt;&lt;tr&gt;&lt;td&gt;这是一个表格&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&quot;</span>
+   <span class="n">html_script</span><span class="o">=</span><span class="s2">&quot;&lt;script language=&#39;javascript&#39;&gt;document.write(&#39;非法执行&#39;);&lt;/script&gt;&quot;</span>
+   <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="s1">&#39;3/html_filter.html&#39;</span><span class="p">,{</span><span class="s2">&quot;html_addr&quot;</span><span class="p">:</span><span class="n">html_addr</span><span class="p">,</span><span class="s2">&quot;html_script&quot;</span><span class="p">:</span><span class="n">html_script</span><span class="p">})</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>新增模板文件<code class="docutils literal notranslate"><span class="pre">templates/3/html_filter.html</span></code></p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>关闭模板转义-表格：{{ html_addr|safe }}
+默认模板转义-表格：{{ html_addr }}&lt;br&gt;
+
+默认模板转义-脚本：{{ html_script }}&lt;br&gt;
+关闭模板转义-脚本：{{ html_script|safe }}&lt;br&gt;
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>编写路由规则 <code class="docutils literal notranslate"><span class="pre">app3/urls.py</span></code></p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+<span class="kn">from</span> <span class="nn">app3</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app3/html_filter/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">html_filter</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>运行应用访问：<a class="reference external" href="http://127.0.0.1:8000/app3/html_filter/">http://127.0.0.1:8000/app3/html_filter/</a></p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>关闭模板转义-表格：
+这是一个表格
+默认模板转义-表格：&lt;table border=1&gt;&lt;tr&gt;&lt;td&gt;这是一个表格&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+默认模板转义-脚本：&lt;script language=&#39;javascript&#39;&gt;document.write(&#39;非法执行&#39;);&lt;/script&gt;
+关闭模板转义-脚本：非法执行
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id23"><span class="section-number">3.1.4. </span>4.【实战】自定义过滤器</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<section id="id9">
+<h3><a class="toc-backref" href="#id24">4.1 准备工作</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>在app3下创建一个“templatetags”的包，在包下创建myfilter.py和__init__.py(内容为空)的文件。</p>
+</section>
+<section id="id10">
+<h3><a class="toc-backref" href="#id25">4.2 编写自定义过滤器并注册</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">app3/templatetags/myfilter.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+
+
+<span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
+<span class="k">def</span> <span class="nf">show_title</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span><span class="si">}</span><span class="s1">...&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>&#64;register.filter是一个装饰器，指明show_title()函数是一个过滤器，在show_title()函数中，value是文章标题，n是指标题要显示的长度，当长度大于n时，将后面的内容以…表示。</p>
+</section>
+<section id="id11">
+<h3><a class="toc-backref" href="#id26">4.3 加载自定义过滤器并编写模板</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>（1）<code class="docutils literal notranslate"><span class="pre">app3/views.py</span></code>中新增视图函数diy_filter()</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+<span class="k">def</span> <span class="nf">diy_filter</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;标题&#39;</span><span class="p">:</span> <span class="s1">&#39;学习Python的好方法就是每天不间断的写代码&#39;</span><span class="p">}</span>
+    <span class="n">dict2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;标题&#39;</span><span class="p">:</span> <span class="s1">&#39;学习Django的好方法就是上手做个项目比如CMS、OA等&#39;</span><span class="p">}</span>
+    <span class="n">dict3</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;标题&#39;</span><span class="p">:</span> <span class="s1">&#39;学习新知识的好方法就是快速构建一颗知识树&#39;</span><span class="p">}</span>
+    <span class="n">lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">dict1</span><span class="p">,</span> <span class="n">dict2</span><span class="p">,</span> <span class="n">dict3</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;3/diy_filter.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;lists&#39;</span><span class="p">:</span> <span class="n">lists</span><span class="p">})</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>新建模板文件<code class="docutils literal notranslate"><span class="pre">templates/3/diy_filter.html</span></code></p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">%</span> <span class="n">load</span> <span class="n">myfilter</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;</span><span class="n">table</span> <span class="n">border</span><span class="o">=</span><span class="mi">1</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;width:300px&quot;</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nb">list</span> <span class="ow">in</span> <span class="n">lists</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="nb">list</span><span class="o">.</span><span class="n">标题</span><span class="o">|</span><span class="n">show_title</span><span class="p">:</span><span class="mi">10</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>添加一条路由规则，<code class="docutils literal notranslate"><span class="pre">app3/urls.py</span></code></p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+<span class="kn">from</span> <span class="nn">app3</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app3/diy_filter/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">diy_filter</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>运行应用后访问：<a class="reference external" href="http://127.0.0.1:8000/app3/diy_filter/">http://127.0.0.1:8000/app3/diy_filter/</a></p></li>
+</ol>
+<p>显示效果</p>
+<img alt="../../_images/image-20220501214801462.png" src="../../_images/image-20220501214801462.png" />
+</section>
+</section>
+<section id="id12">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">3.1.5. </span>5.【实战】自定义标签</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<section id="id13">
+<h3><a class="toc-backref" href="#id28">5.1 简单标签</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>（1）新建文件<code class="docutils literal notranslate"><span class="pre">app3/templatetags/mytags.py</span></code>,定义标签函数show_titlr()。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+
+
+<span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
+<span class="k">def</span> <span class="nf">show_title</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span><span class="si">}</span><span class="s1">...&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;register.simple_tag</span></code>是一个装饰器，指明show_title()函数是一个自定义的简单标签。</p>
+<ol class="arabic simple" start="2">
+<li><p>定义视图函数diy_tags()</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+<span class="k">def</span> <span class="nf">diy_tags</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;标题&#39;</span><span class="p">:</span> <span class="s1">&#39;学习Python的好方法就是每天不间断的写代码&#39;</span><span class="p">}</span>
+    <span class="n">dict2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;标题&#39;</span><span class="p">:</span> <span class="s1">&#39;学习Django的好方法就是上手做个项目比如CMS、OA等&#39;</span><span class="p">}</span>
+    <span class="n">dict3</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;标题&#39;</span><span class="p">:</span> <span class="s1">&#39;学习新知识的好方法就是快速构建一颗知识树&#39;</span><span class="p">}</span>
+    <span class="n">lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">dict1</span><span class="p">,</span> <span class="n">dict2</span><span class="p">,</span> <span class="n">dict3</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;3/diy_tags.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;lists&#39;</span><span class="p">:</span> <span class="n">lists</span><span class="p">})</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>打开模板文件<code class="docutils literal notranslate"><span class="pre">templates/3/diy_tags.html</span></code>,编写代码如下</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">%</span> <span class="n">load</span> <span class="n">mytags</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;</span><span class="n">table</span> <span class="n">border</span><span class="o">=</span><span class="mi">1</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;width:300px&quot;</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nb">list</span> <span class="ow">in</span> <span class="n">lists</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{</span><span class="o">%</span> <span class="n">show_title</span> <span class="nb">list</span><span class="o">.</span><span class="n">标题</span> <span class="mi">10</span> <span class="o">%</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>编写路由规则 <code class="docutils literal notranslate"><span class="pre">app3/urls.py</span></code></p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+<span class="kn">from</span> <span class="nn">app3</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app3/diy_tags/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">diy_tags</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>运行应用，访问：<a class="reference external" href="http://127.0.0.1:8000/app3/diy_tags/">http://127.0.0.1:8000/app3/diy_tags/</a></p></li>
+</ol>
+<p>此时与自定义过滤器访问内容一样。</p>
+</section>
+<section id="id14">
+<h3><a class="toc-backref" href="#id29">5.2 包含标签</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">app3/templatetags/mytags.py</span></code>中增加自定义标签函数<code class="docutils literal notranslate"><span class="pre">show_info_tags()</span></code></p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+
+
+<span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
+<span class="k">def</span> <span class="nf">show_title</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span><span class="si">}</span><span class="s1">...&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="nd">@register</span><span class="o">.</span><span class="n">inclusion_tag</span><span class="p">(</span><span class="s2">&quot;3\show_info_tags.html&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">show_info_tags</span><span class="p">():</span>
+    <span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;标题&#39;</span><span class="p">:</span> <span class="s1">&#39;张三|2020-02-02&#39;</span><span class="p">}</span>
+    <span class="n">dict2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;标题&#39;</span><span class="p">:</span> <span class="s1">&#39;李四|2020-02-01&#39;</span><span class="p">}</span>
+    <span class="n">dict3</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;标题&#39;</span><span class="p">:</span> <span class="s1">&#39;王五|2020-01-31&#39;</span><span class="p">}</span>
+    <span class="n">lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">dict1</span><span class="p">,</span> <span class="n">dict2</span><span class="p">,</span> <span class="n">dict3</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;lists&#39;</span><span class="p">:</span> <span class="n">lists</span><span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>新建模板文件<code class="docutils literal notranslate"><span class="pre">templates/3/show_info_tags.html</span></code></p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">table</span> <span class="n">border</span><span class="o">=</span><span class="mi">1</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;width:300px&quot;</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nb">list</span> <span class="ow">in</span> <span class="n">lists</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="nb">list</span><span class="o">.</span><span class="n">标题</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">templates/3/show_info.html</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">%</span> <span class="n">load</span> <span class="n">mytags</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">当前文件是show_info</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">以下内容是从另外一个模板文件show_info_tags加载的</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">show_info_tags</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>模板中使用自定义标签，必须先使用{% load
+自定义标签%}进行装载，然后就能在模板中调用自定义的标签函数来显示一段HTML信息。</p>
+<ol class="arabic simple" start="3">
+<li><p>编写视图，新增视图函数</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+<span class="k">def</span> <span class="nf">show_info</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+   <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="s1">&#39;3/show_info.html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(4 ) 编写路由规则 <code class="docutils literal notranslate"><span class="pre">app3/urls.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+<span class="kn">from</span> <span class="nn">app3</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app3/show_info/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">show_info</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>运行访问：<a class="reference external" href="http://127.0.0.1:8000/app3/show_info/">http://127.0.0.1:8000/app3/show_info/</a></p></li>
+</ol>
+<img alt="../../_images/image-20220501221003092.png" src="../../_images/image-20220501221003092.png" />
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="3. 3.页面展现-基于Django模板" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

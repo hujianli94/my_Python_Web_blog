@@ -1,0 +1,244 @@
+.. contents::
+   :depth: 3
+..
+
+认识路由
+========
+
+1.路由系统的基本配置
+--------------------
+
+.. code:: python
+
+   from django.contrib import admin
+   from django.urls import path, include, re_path
+   from app1 import views
+
+   urlpatterns = [
+       path('admin/', admin.site.urls),
+       path('index/', views.index)
+   ]
+
+path()函数的语法格式如下：
+
+::
+
+   path(url正则表达式,视图函数，别名)
+
+有些路由规则使用的是url()函数，Django1.x中的用法
+
+Django2.x和Django3.x向下兼容，仍然可以使用该函数。
+
+2.【实战】用“路由包含”简化项目的复杂度
+--------------------------------------
+
+``myshop/urls.py``
+
+.. code:: python
+
+   from django.contrib import admin
+   from django.urls import path, include, re_path
+   import app1
+   import app2
+
+   urlpatterns = [
+       path('admin/', admin.site.urls),
+       path('index/', views.index),
+       # path('', include('app1.urls')),
+       path('', include('app2.urls'))
+   ]
+
+``app2/urls.py``
+
+.. code:: python
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path('app2/index/', views.index),
+   ]
+
+``app2/views.py``
+
+.. code:: python
+
+   from django.shortcuts import render
+   from django.http import HttpResponse
+
+   # Create your views here.
+
+
+   def index(request):
+       return HttpResponse("app2z中的index方法")
+
+访问http://127.0.0.1:8000/app2/index/
+
+1. 编写带URL参数的路由
+~~~~~~~~~~~~~~~~~~~~~~
+
+``app2/urls.py``
+
+.. code:: python
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path('app2/show/<int:id>/', views.show),
+   ]
+
+``app2/views.py``
+
+.. code:: python
+
+   from django.shortcuts import render
+   from django.http import HttpResponse
+
+   # Create your views here.
+   def show(request,id):
+       return HttpResponse("app2中的show方法,参数为id,值为"+str(id))
+
+访问http://127.0.0.1:8000/app2/show/1/
+
+2. URL参数解析的加强实例
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+``app2/urls.py``
+
+.. code:: python
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path("app2/article/<uuid:id>/", views.show_uuid, name="show_uuid"),
+       path("app2/article/<slug:q>/", views.show_slug, name="show_slug"),
+   ]
+
+``app2/views.py``
+
+.. code:: python
+
+   from django.shortcuts import render
+   from django.http import HttpResponse
+
+   # Create your views here.
+
+
+   def show_uuid(request, id):
+       return HttpResponse("app2中的show_uuid方法,参数为id,值为" + str(id))
+
+
+   def show_slug(request, q):
+       return HttpResponse("app2中的show_slug方法,参数为q,值为" + str(q))
+
+访问：http://127.0.0.1:8000/app2/article/0000000000000000-999999-000000/
+
+访问：http://127.0.0.1:8000/app2/article/abc123/
+
+3.【实战】用re_path()方法正则匹配复杂路由
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+3.1 实例
+^^^^^^^^
+
+``app2/urls.py``
+
+.. code:: python
+
+   from django.urls import path, re_path
+   from app2 import views
+
+   urlpatterns = [
+       re_path('app2/list/(?P<year>\d{4})/', views.article_list),
+       re_path('app2/page/(?P<page>\d+)&key=(?P<key>\w+)',
+               views.article_page,
+               name="article_page"),
+   ]
+
+``app2/views.py``
+
+.. code:: python
+
+   from django.shortcuts import render
+   from django.http import HttpResponse
+
+   # Create your views here.
+
+
+   def article_list(request, year):
+       return HttpResponse("app2中的article_list方法,参数为year,指定4位，值为" + str(year))
+
+
+   def article_page(request, page, key):
+       return HttpResponse("app2中的article_page方法,参数为page,任意数字，值为" + str(page) +
+                           " 参数key，字母数字下划线，值为" + key)
+
+访问上述两条路由规则
+
+http://127.0.0.1:8000/app2/list/2020/
+
+http://127.0.0.1:8000/app2/page/10&key=test
+
+4. 反向解析路由
+~~~~~~~~~~~~~~~
+
+在Django的路由配置项中，可以给一个路由配置项命名，然后再视图函数或者模板的HTML中进行调用。
+
+.. _实例-1:
+
+4.1 实例
+^^^^^^^^
+
+``app2/urls.py``
+
+.. code:: python
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path('app2/url_reverse/', views.url_reverse, name='app2_url_reverse'),
+   ]
+
+``app2/views.py``
+
+.. code:: python
+
+   from django.shortcuts import render
+
+
+   # Create your views here.
+   def url_reverse(request):
+       # 使用reverse()方法反向解析
+       print("在views()函数中使用reverse()方法解析的结果")
+       return render(request, "2/url_reverse.html")
+
+``template/2/url_reverse.html``
+
+.. code:: html
+
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Title</title>
+   </head>
+   <body>
+   <div>
+       在HTML中使用url标签进行反向解析
+       <br>
+       {% url 'app2_url_reverse' %}
+   </div>
+   </body>
+   </html>
+
+访问：http://127.0.0.1:8000/app2/url_reverse/
+
+输出
+
+::
+
+   在HTML中使用url标签进行反向解析
+   /app2/url_reverse/

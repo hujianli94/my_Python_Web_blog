@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.3. 认识视图类 &mdash; Django+Vue.js实战派,Python Web开发与运维</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. 3.页面展现-基于Django模板" href="../3.%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%8E%B0-%E5%9F%BA%E4%BA%8EDjango%E6%A8%A1%E6%9D%BF/index.html" />
+    <link rel="prev" title="2.2. 认识视图函数" href="2.%E8%AE%A4%E8%AF%86%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Django+Vue.js 实战派,Python Web开发与运维
+            <img src="../../_static/my_python_web.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Django+Vue.js实战派-Python Web</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.%E8%B5%B0%E8%BF%9BDjango/index.html">1. 1.走进Django</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. 2.网站的入口-Django的路由和视图</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.%E8%AE%A4%E8%AF%86%E8%B7%AF%E7%94%B1.html">2.1. 认识路由</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.%E8%AE%A4%E8%AF%86%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0.html">2.2. 认识视图函数</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.3. 认识视图类</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.3.1. 1.什么是视图类</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">2.3.2. 2.对比视图函数和视图类</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">2.3.3. 3.利用视图类进行功能设计</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%8E%B0-%E5%9F%BA%E4%BA%8EDjango%E6%A8%A1%E6%9D%BF/index.html">3. 3.页面展现-基于Django模板</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Django+Vue.js 实战派,Python Web开发与运维</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Django+Vue.js实战派-Python Web</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>2.网站的入口-Django的路由和视图</a> &raquo;</li>
+      <li><span class="section-number">2.3. </span>认识视图类</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Python_Web/2.网站的入口-Django的路由和视图/3.认识视图类.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id7">认识视图类</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id8">1.什么是视图类</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id9">2.对比视图函数和视图类</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id10">2.1 视图函数</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id11">2.2 视图类</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id6" id="id12">3.利用视图类进行功能设计</a></p>
+<ul>
+<li><p><a class="reference internal" href="#templateview" id="id13">3.1 通用视图类-TemplateView</a></p></li>
+<li><p><a class="reference internal" href="#listview" id="id14">3.2 列表视图类-ListView</a></p></li>
+<li><p><a class="reference internal" href="#detailview" id="id15">3.3 详细视图类-DetailView</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id7"><span class="section-number">2.3. </span>认识视图类</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<section id="id2">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">2.3.1. </span>1.什么是视图类</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>在视图里使用类处理方式，被称为类视图（CBV）</p>
+<p>采用面向对象的思维，把每个方法处理逻辑变成视图类中的的单个方法，这样可以使程序逻辑变得更新简单、清晰。</p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">2.3.2. </span>2.对比视图函数和视图类</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<section id="id4">
+<h3><a class="toc-backref" href="#id10">2.1 视图函数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">index_page</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;GET&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;GET请求&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;POST请求&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id11">2.2 视图类</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.views</span> <span class="kn">import</span> <span class="n">View</span>
+
+
+<span class="k">class</span> <span class="nc">IndexPageView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    类视图</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;GET请求&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;POST请求&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>其中视图类IndexPageView集成了django.views模块下的View类。</p>
+<p>视图类的路由定义如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/indexpage&#39;</span><span class="p">,</span><span class="n">views</span><span class="o">.</span><span class="n">IndexPageView</span><span class="o">.</span><span class="n">as_view</span><span class="p">())</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>视图类在调用时，只能是函数的方式，而不能是类的方式，需要将视图类as_view()转化为视图函数。</p>
+</section>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">2.3.3. </span>3.利用视图类进行功能设计</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>Django提供了众多视图类，可以通过视图类简化开发过程。</p>
+<section id="templateview">
+<h3><a class="toc-backref" href="#id13">3.1 通用视图类-TemplateView</a><a class="headerlink" href="#templateview" title="Permalink to this headline">¶</a></h3>
+<p>TemplateView是一个视图类，用来渲染指定的模板。</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/views_class.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">TemplateView</span><span class="p">,</span> <span class="n">ListView</span><span class="p">,</span> <span class="n">DetailView</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="k">class</span> <span class="nc">TestTemplateView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+    <span class="c1"># 设置模板文件</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s2">&quot;2/test_templateview.html&quot;</span>
+
+    <span class="c1"># 重写父类get_context_data()方法</span>
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># 增加模板变量info</span>
+        <span class="n">context</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;该变量可以传递到模板&quot;</span>
+        <span class="k">return</span> <span class="n">context</span>
+</pre></div>
+</div>
+<p>通过<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">django.views.generic</span> <span class="pre">import</span> <span class="pre">TemplateView</span></code>导入TemplateView类。</p>
+<p>通过继承TestTemplateView类的方式创建一个TestTemplateView类，在TestTemplateView类中设置模板文件。</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/urls.py</span></code></p>
+<p>路由配置如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+<span class="kn">from</span> <span class="nn">app2.views_class</span> <span class="kn">import</span> <span class="n">TestTemplateView</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/test_templateview/&#39;</span><span class="p">,</span> <span class="n">TestTemplateView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>请注意路由中as_view()方法的用法。</p>
+</section>
+<section id="listview">
+<h3><a class="toc-backref" href="#id14">3.2 列表视图类-ListView</a><a class="headerlink" href="#listview" title="Permalink to this headline">¶</a></h3>
+<p>ListView视图类用于将数据表的数据以列表的形式显示。</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/views_class.py</span></code>增加视图类TestListView。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">TemplateView</span><span class="p">,</span> <span class="n">ListView</span><span class="p">,</span> <span class="n">DetailView</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">TestListView</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">UserBaseInfo</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s2">&quot;2/test_listview.html&quot;</span>
+    <span class="c1"># 设置模板变量</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
+    <span class="c1"># 每页显示的条数</span>
+    <span class="n">paginate_by</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># 返回状态为1的数据</span>
+    <span class="c1"># queryset=UserBaseInfo.objects.filter(status=1)</span>
+    <span class="c1"># 重新父类的get_queryset()</span>
+    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 返回所有数据</span>
+        <span class="n">userinfo</span> <span class="o">=</span> <span class="n">UserBaseInfo</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">userinfo</span>
+
+    <span class="c1"># 重写父类get_context_data()方法</span>
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># 增加模板变量info</span>
+        <span class="n">context</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ListView变量可以传递到模板&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">context</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">templates/2/test_listview.html</span></code></p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    接收变量
+    <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+   {{info}}
+   <span class="p">&lt;</span><span class="nt">table</span> <span class="na">border</span><span class="o">=</span><span class="s">1</span><span class="p">&gt;</span>
+   {% for user in users %}
+   <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+       <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ user.username }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+       <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ user.status }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+       <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ user.createdate }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+   <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+   {% endfor%}
+    <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        {% if page_obj.has_previous %}
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;?page={{ page_obj.previous_page_number }}&quot;</span><span class="p">&gt;</span>
+                上一页
+            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;?page={{ page_obj.next_page_number }}&quot;</span><span class="p">&gt;</span>
+                下一页
+            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        {% endif %}
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>编写路由</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/urls.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+<span class="kn">from</span> <span class="nn">app2.views_class</span> <span class="kn">import</span> <span class="n">TestListView</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/test_listview/&#39;</span><span class="p">,</span> <span class="n">TestListView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>访问：<a class="reference external" href="http://127.0.0.1:8000/app2/test_listview/">http://127.0.0.1:8000/app2/test_listview/</a></p>
+<p>通过控制台查看context变量</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;paginator&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">django</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">paginator</span><span class="o">.</span><span class="n">Paginator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x00000195F8EC2910</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;page_obj&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Page</span> <span class="mi">1</span> <span class="n">of</span> <span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;is_paginated&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;object_list&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">UserBaseInfo</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">UserBaseInfo</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;view&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">app2</span><span class="o">.</span><span class="n">views_class</span><span class="o">.</span><span class="n">TestListView</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x00000195F8EC22B0</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="s1">&#39;ListView变量可以传递到模板&#39;</span><span class="p">}</span>
+<span class="p">[</span><span class="mi">30</span><span class="o">/</span><span class="n">Apr</span><span class="o">/</span><span class="mi">2022</span> <span class="mi">17</span><span class="p">:</span><span class="mi">02</span><span class="p">:</span><span class="mi">46</span><span class="p">]</span> <span class="s2">&quot;GET /app2/test_listview/?page=1 HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="mi">376</span>
+</pre></div>
+</div>
+</section>
+<section id="detailview">
+<h3><a class="toc-backref" href="#id15">3.3 详细视图类-DetailView</a><a class="headerlink" href="#detailview" title="Permalink to this headline">¶</a></h3>
+<p>DetailView视图类用于将数据表的数据以详细视图的形式显示。</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/views_class.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestDetailView</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">UserBaseInfo</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s2">&quot;2/test_detailview.html&quot;</span>
+    <span class="c1"># 设置模板变量</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
+    <span class="n">pk_url_kwarg</span> <span class="o">=</span> <span class="s1">&#39;userid&#39;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">templates/2/test_detailview.html</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">br</span><span class="o">&gt;</span>
+   <span class="p">{{</span><span class="n">info</span><span class="p">}}</span>
+   <span class="o">&lt;</span><span class="n">table</span> <span class="n">border</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">姓名</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">users</span><span class="o">.</span><span class="n">username</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">注册时间</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">users</span><span class="o">.</span><span class="n">createdate</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>编写路由规则</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/urls.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+<span class="kn">from</span> <span class="nn">app2.views_class</span> <span class="kn">import</span> <span class="n">TestTemplateView</span><span class="p">,</span> <span class="n">TestListView</span><span class="p">,</span> <span class="n">TestDetailView</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/test_detailview/&lt;int:userid&gt;/&#39;</span><span class="p">,</span> <span class="n">TestDetailView</span><span class="o">.</span><span class="n">as_view</span><span class="p">())</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>访问：<a class="reference external" href="http://127.0.0.1:8000/app2/test_detailview/1/">http://127.0.0.1:8000/app2/test_detailview/1/</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="2.%E8%AE%A4%E8%AF%86%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0.html" class="btn btn-neutral float-left" title="2.2. 认识视图函数" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../3.%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%8E%B0-%E5%9F%BA%E4%BA%8EDjango%E6%A8%A1%E6%9D%BF/index.html" class="btn btn-neutral float-right" title="3. 3.页面展现-基于Django模板" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

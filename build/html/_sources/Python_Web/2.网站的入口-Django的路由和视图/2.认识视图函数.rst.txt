@@ -1,0 +1,417 @@
+.. contents::
+   :depth: 3
+..
+
+认识视图函数
+============
+
+Django的视图是MTV的View层，用于处理客户端请求并生成相应数据。在视图中使用函数处理请求的方法，呗成为视图函数.也叫做FBV。视图函数的代码一般放在应用目录下的views.py文件中。
+
+1.什么是视图函数
+----------------
+
+::
+
+   from django.http import HttpResponse
+
+
+   def hello(request):
+       return HttpResponse("Hello Django!!!!")
+
+2.视图函数的底层原理
+--------------------
+
+视图函数主要使用HttpRequest对象（请求对象）和HttpResponse相应对象（相应对象）。
+
+当浏览器向服务端请求一个页面时，Django先创建一个HttpRequest对象（该对象中包含请求的元数据），
+
+然后加载相应的视图，将这个HttpRequest对象作为第1个参数传递给视图函数，视图函数会返回一个HttpResponse对象。
+
+2.1 HttpRequest对象
+~~~~~~~~~~~~~~~~~~~
+
+**HttpRequest对象的属性/方法**
+
+参考文献：
+
+https://www.cnblogs.com/eric_yi/p/8046586.html
+
+https://docs.djangoproject.com/zh-hans/3.2/ref/request-response/
+
+(1) 增加test_get()视图函数，代码如下
+
+``app2/views.py``
+
+.. code:: python
+
+   from django.shortcuts import render
+   from django.http import HttpResponse
+
+
+   def test_get(request):
+       print(request.get_host())  # 域名+端口
+       print(request.get_raw_uri())  # 全部路径，包含参数
+       print(request.path)  # 获取访问文件路径，不含参数
+       print(request.get_full_path())  # 获取访问文件路径，包含参数
+       print(request.method)  # 获取请求中的使用的HTTP方式(POST/GET)
+       print(request.GET)  # 获取GET请求的参数
+       print(request.META["HTTP_USER_AGENT"])  # 用户浏览器的user-agent字符串
+       print(request.META["REMOTE_ADDR"])  # 客户端IP
+       print(request.GET.get('username'))  # 获取get参数
+       return HttpResponse("")
+
+``app2/urls.py``
+
+.. code:: python
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path('app2/test_get/', views.test_get),
+   ]
+
+访问：http://127.0.0.1:8000/app2/test_get/
+
+控制台输出：
+
+::
+
+   127.0.0.1:8000
+   /app2/test_get/
+   /app2/test_get/
+   GET
+   <QueryDict: {}>
+   Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36
+   127.0.0.1
+   None
+   [30/Apr/2022 11:37:26] "GET /app2/test_get/ HTTP/1.1" 200 0
+
+(2) ``app2/view.py``\ 增加test_post()视图函数，代码如下
+
+::
+
+   def test_post(request):
+       print(request.method) #获取请求中的使用的HTTP方式(POST/GET)
+       print(request.POST.get('username'))
+       return render(request,'2/test_post.html')
+
+新建文件“template/2/test_post.html”
+
+.. code:: html
+
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Title</title>
+   </head>
+   <body>
+   <div>
+       <form method="post">
+           {% csrf_token %}
+           <input type="text" name="username">
+           <input type="submit" value="提交">
+       </form>
+   </div>
+   </body>
+   </html>
+
+``app2/urls.py``\ 配置路由如下
+
+.. code:: python
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path('app2/test_post/', views.test_post)
+   ]
+
+运行后控制台输出
+
+::
+
+   POST
+   hujianli
+   [30/Apr/2022 11:43:33] "POST /app2/test_post/ HTTP/1.1" 200 391
+
+2.2 HttpResponse对象
+~~~~~~~~~~~~~~~~~~~~
+
+**HttpResponse对象的常用属性**
+
+参考文献：
+
+https://www.cnblogs.com/eric_yi/p/8046586.html
+
+https://docs.djangoproject.com/zh-hans/3.2/ref/request-response/
+
+常用的状态码 status_code表
+
+https://docs.python.org/3/library/http.html#http.HTTPStatus
+
+演示HttpResponse对象的用法
+
+``app2/views.py``
+
+::
+
+   def test_response(request):
+       response = HttpResponse()
+       response.write("hello django")
+       response.write("<br>")
+       response.write(response.content)
+       response.write("<br>")
+       response.write(response['Content-type'])
+       response.write("<br>")
+       response.write(response.status_code)
+       response.write("<br>")
+       response.write(response.charset)
+       response.write("<br>")
+       return response
+
+``app2/urls.py``
+
+::
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path('app2/test_response/', views.test_response),
+   ]
+
+打开浏览器访问： http://127.0.0.1:8000/app2/test_response/
+
+界面效果
+
+::
+
+   hello django
+   hello django
+
+   text/html; charset=utf-8
+   200
+   utf-8
+
+3. 视图处理函数的使用
+---------------------
+
+通过HttpRequest对象和HttpResponse对象，可以处理基本的数据请求并返回响应数据。但是这种方式繁琐，Django封装了几个简单的函数供我们使用。
+
+3.1 用render()函数实现页面渲染
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   render(request, template_name, context=None, content_type=None, status=None, using=None)¶
+   将给定的模板与给定的上下文字典组合在一起，并以渲染的文本返回一个 HttpResponse 对象。
+
+   Django没有提供返回 TemplateResponse 的便捷函数，因为 TemplateResponse 的构造函数提供了与render()同等程度的便利。
+
+代码示例
+
+``app2/views.py``
+
+.. code:: python
+
+   from django.shortcuts import render
+   from django.http import HttpResponse
+
+
+   # Create your views here.
+
+   def test_render(request):
+       return render(request, '2/test_render.html', {'info': 'hello django'}, content_type='text/html')
+
+``template/2/test_render.html``
+
+.. code:: html
+
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Title</title>
+   </head>
+   <body>
+   <div>
+       接收变量
+       <br>
+       {{ info }}
+   </div>
+   </body>
+   </html>
+
+``app2/urls.py``
+
+.. code:: python
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path('app2/test_render/', views.test_render),
+   ]
+
+访问：http://127.0.0.1:8000/app2/test_render/
+
+页面显示
+
+::
+
+   接收变量
+   hello django
+
+3.2 使用redirect()函数实现页面重定向
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+日常开发中，如果网页结构发生变化，就需要做重定向，如果不做重定向，就会得到一个404页面错误消息。
+
+Django中redirect()函数实现网页重定向，该函数的参数包括以下3种情况。
+
+-  一个模型：模型的
+   ```get_absolute_url()`` <https://docs.djangoproject.com/zh-hans/3.2/ref/models/instances/#django.db.models.Model.get_absolute_url>`__
+   函数将被调用。
+-  视图名，可能带有的参数：\ ```reverse()`` <https://docs.djangoproject.com/zh-hans/3.2/ref/urlresolvers/#django.urls.reverse>`__
+   将被用于反向解析名称。
+-  一个绝对或相对 URL，将按原样用作重定向位置。
+
+（1）通过调用\ ```get_absolute_url()`` <https://docs.djangoproject.com/zh-hans/3.2/ref/models/instances/#django.db.models.Model.get_absolute_url>`__
+函数进行重定向
+
+``app2/models.py``
+
+.. code:: python
+
+   from django.db import models
+   from django.urls import reverse
+
+
+   class UserBaseInfo(models.Model):
+       id = models.AutoField(verbose_name='编号', primary_key=True)
+       username = models.CharField(verbose_name='用户名称', max_length=30)
+       password = models.CharField(verbose_name='密码', max_length=20)
+       status = models.CharField(verbose_name='状态', max_length=1)
+       createdate = models.DateTimeField(verbose_name='创建日期', db_column='createDate')
+
+       def __str__(self):
+           return str(self.id)
+
+       def get_absolute_url(self):
+           return reverse('app2_userinfo', kwargs={'id': self.pk})
+
+       class Meta:
+           verbose_name = '人员基本信息'
+           db_table = 'UserBaseInfo2'
+
+代码定义了get_absolute_url()方法，用于返回模型对外的URL；使用reverse()函数做反向解析操作。
+
+迁移数据库
+
+::
+
+   python manage.py makemigrations
+   python manage.py migrate
+
+新增test_redirect_model()和userinfo()视图函数
+
+``app2/views.py``
+
+.. code:: python
+
+   from django.shortcuts import render, redirect
+   from django.http import HttpResponse
+   from .models import UserBaseInfo
+
+
+   def test_redirect_model(request, id):
+       user = UserBaseInfo.objects.get(id=id)
+       return redirect(user)
+
+
+   def userinfo(request, id):
+       user = UserBaseInfo.objects.get(id=id)
+       return HttpResponse("编号：" + str(user.id) + " 姓名：" + user.username)
+
+配置路由规则
+
+``app2/urls.py``
+
+.. code:: python
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path('app2/test_redirect_model/<int:id>/', views.test_redirect_model, name='app2_test_redirect_model'),
+       path('app2/userinfo/<int:id>/', views.userinfo, name='app2_userinfo'),
+   ]
+
+访问：http://127.0.0.1:8000/app2/test_redirect_model/1/时会执行test_redirect_model()视图函数,redirect()函数包含一个模型实例。因此会调用该模型实例的get_absolute_url()方法，
+get_absolute_url()方法通过reverse()函数做反向解析，组装出\ ``app2/userinfo/1/``\ 这样的路由规则，然后根据规则找到对应的userinfo()视图函数.结果如下
+
+此信息是手动添加在数据库中的内容，用于测试。
+
+::
+
+   编号：1 姓名：hujianli
+
+（2）通过路由反向解析进行重定向
+
+``app2/views,py``
+
+.. code:: python
+
+   from django.shortcuts import render, redirect
+   from django.http import HttpResponse
+
+
+   # Create your views here.
+   def test_redirect_views(request, id):
+       return redirect('app2_userinfo', id)
+
+redirect()函数直接反向解析路由的效果与reverse()函数的效果一样。
+
+``app2/urls.py``
+
+.. code:: python
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path('app2/test_redirect_model/<int:id>/', views.test_redirect_model, name='app2_test_redirect_model'),
+   ]
+
+访问：http://127.0.0.1:8000/app2/userinfo/1/
+
+（3）一个绝对或相对 URL，将按原样用作重定向位置。
+
+``app2/views.py``
+
+.. code:: python
+
+   from django.shortcuts import render, redirect
+   from django.http import HttpResponse
+
+
+   # Create your views here.
+
+   def test_redirect(request):
+       return redirect("https://www.phei.com.cn/")
+
+``app2/urls.py``
+
+.. code:: python
+
+   from django.urls import path
+   from app2 import views
+
+   urlpatterns = [
+       path('app2/test_redirect/', views.test_redirect, name='app2_test_redirect'),
+
+   ]
+
+此时访问http://127.0.0.1:8000/app2/test_redirect时，会自动重定向到电子工业出版社的网站了。

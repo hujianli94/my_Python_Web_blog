@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.2. 认识视图函数 &mdash; Django+Vue.js实战派,Python Web开发与运维</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.3. 认识视图类" href="3.%E8%AE%A4%E8%AF%86%E8%A7%86%E5%9B%BE%E7%B1%BB.html" />
+    <link rel="prev" title="2.1. 认识路由" href="1.%E8%AE%A4%E8%AF%86%E8%B7%AF%E7%94%B1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Django+Vue.js 实战派,Python Web开发与运维
+            <img src="../../_static/my_python_web.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Django+Vue.js实战派-Python Web</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.%E8%B5%B0%E8%BF%9BDjango/index.html">1. 1.走进Django</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. 2.网站的入口-Django的路由和视图</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.%E8%AE%A4%E8%AF%86%E8%B7%AF%E7%94%B1.html">2.1. 认识路由</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.2. 认识视图函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.2.1. 1.什么是视图函数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">2.2.2. 2.视图函数的底层原理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.2.3. 3. 视图处理函数的使用</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="3.%E8%AE%A4%E8%AF%86%E8%A7%86%E5%9B%BE%E7%B1%BB.html">2.3. 认识视图类</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%8E%B0-%E5%9F%BA%E4%BA%8EDjango%E6%A8%A1%E6%9D%BF/index.html">3. 3.页面展现-基于Django模板</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Django+Vue.js 实战派,Python Web开发与运维</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Django+Vue.js实战派-Python Web</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>2.网站的入口-Django的路由和视图</a> &raquo;</li>
+      <li><span class="section-number">2.2. </span>认识视图函数</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Python_Web/2.网站的入口-Django的路由和视图/2.认识视图函数.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id5">认识视图函数</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id6">1.什么是视图函数</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id7">2.视图函数的底层原理</a></p>
+<ul>
+<li><p><a class="reference internal" href="#httprequest" id="id8">2.1 HttpRequest对象</a></p></li>
+<li><p><a class="reference internal" href="#httpresponse" id="id9">2.2 HttpResponse对象</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id4" id="id10">3. 视图处理函数的使用</a></p>
+<ul>
+<li><p><a class="reference internal" href="#render" id="id11">3.1 用render()函数实现页面渲染</a></p></li>
+<li><p><a class="reference internal" href="#redirect" id="id12">3.2 使用redirect()函数实现页面重定向</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id5"><span class="section-number">2.2. </span>认识视图函数</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>Django的视图是MTV的View层，用于处理客户端请求并生成相应数据。在视图中使用函数处理请求的方法，呗成为视图函数.也叫做FBV。视图函数的代码一般放在应用目录下的views.py文件中。</p>
+<section id="id2">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">2.2.1. </span>1.什么是视图函数</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;Hello Django!!!!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id7"><span class="section-number">2.2.2. </span>2.视图函数的底层原理</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>视图函数主要使用HttpRequest对象（请求对象）和HttpResponse相应对象（相应对象）。</p>
+<p>当浏览器向服务端请求一个页面时，Django先创建一个HttpRequest对象（该对象中包含请求的元数据），</p>
+<p>然后加载相应的视图，将这个HttpRequest对象作为第1个参数传递给视图函数，视图函数会返回一个HttpResponse对象。</p>
+<section id="httprequest">
+<h3><a class="toc-backref" href="#id8">2.1 HttpRequest对象</a><a class="headerlink" href="#httprequest" title="Permalink to this headline">¶</a></h3>
+<p><strong>HttpRequest对象的属性/方法</strong></p>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/eric_yi/p/8046586.html">https://www.cnblogs.com/eric_yi/p/8046586.html</a></p>
+<p><a class="reference external" href="https://docs.djangoproject.com/zh-hans/3.2/ref/request-response/">https://docs.djangoproject.com/zh-hans/3.2/ref/request-response/</a></p>
+<ol class="arabic simple">
+<li><p>增加test_get()视图函数，代码如下</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">app2/views.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+
+<span class="k">def</span> <span class="nf">test_get</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">get_host</span><span class="p">())</span>  <span class="c1"># 域名+端口</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">get_raw_uri</span><span class="p">())</span>  <span class="c1"># 全部路径，包含参数</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>  <span class="c1"># 获取访问文件路径，不含参数</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">get_full_path</span><span class="p">())</span>  <span class="c1"># 获取访问文件路径，包含参数</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="p">)</span>  <span class="c1"># 获取请求中的使用的HTTP方式(POST/GET)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">)</span>  <span class="c1"># 获取GET请求的参数</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="p">[</span><span class="s2">&quot;HTTP_USER_AGENT&quot;</span><span class="p">])</span>  <span class="c1"># 用户浏览器的user-agent字符串</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="p">[</span><span class="s2">&quot;REMOTE_ADDR&quot;</span><span class="p">])</span>  <span class="c1"># 客户端IP</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">))</span>  <span class="c1"># 获取get参数</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">app2/urls.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/test_get/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">test_get</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>访问：<a class="reference external" href="http://127.0.0.1:8000/app2/test_get/">http://127.0.0.1:8000/app2/test_get/</a></p>
+<p>控制台输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8000</span>
+<span class="o">/</span><span class="n">app2</span><span class="o">/</span><span class="n">test_get</span><span class="o">/</span>
+<span class="o">/</span><span class="n">app2</span><span class="o">/</span><span class="n">test_get</span><span class="o">/</span>
+<span class="n">GET</span>
+<span class="o">&lt;</span><span class="n">QueryDict</span><span class="p">:</span> <span class="p">{}</span><span class="o">&gt;</span>
+<span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">Windows</span> <span class="n">NT</span> <span class="mf">10.0</span><span class="p">;</span> <span class="n">WOW64</span><span class="p">)</span> <span class="n">AppleWebKit</span><span class="o">/</span><span class="mf">537.36</span> <span class="p">(</span><span class="n">KHTML</span><span class="p">,</span> <span class="n">like</span> <span class="n">Gecko</span><span class="p">)</span> <span class="n">Chrome</span><span class="o">/</span><span class="mf">100.0</span><span class="o">.</span><span class="mf">4896.60</span> <span class="n">Safari</span><span class="o">/</span><span class="mf">537.36</span>
+<span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>
+<span class="kc">None</span>
+<span class="p">[</span><span class="mi">30</span><span class="o">/</span><span class="n">Apr</span><span class="o">/</span><span class="mi">2022</span> <span class="mi">11</span><span class="p">:</span><span class="mi">37</span><span class="p">:</span><span class="mi">26</span><span class="p">]</span> <span class="s2">&quot;GET /app2/test_get/ HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><code class="docutils literal notranslate"><span class="pre">app2/view.py</span></code>增加test_post()视图函数，代码如下</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_post</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="p">)</span> <span class="c1">#获取请求中的使用的HTTP方式(POST/GET)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="s1">&#39;2/test_post.html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>新建文件“template/2/test_post.html”</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
+        {% csrf_token %}
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;username&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;提交&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">app2/urls.py</span></code>配置路由如下</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/test_post/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">test_post</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>运行后控制台输出</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span>
+<span class="n">hujianli</span>
+<span class="p">[</span><span class="mi">30</span><span class="o">/</span><span class="n">Apr</span><span class="o">/</span><span class="mi">2022</span> <span class="mi">11</span><span class="p">:</span><span class="mi">43</span><span class="p">:</span><span class="mi">33</span><span class="p">]</span> <span class="s2">&quot;POST /app2/test_post/ HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="mi">391</span>
+</pre></div>
+</div>
+</section>
+<section id="httpresponse">
+<h3><a class="toc-backref" href="#id9">2.2 HttpResponse对象</a><a class="headerlink" href="#httpresponse" title="Permalink to this headline">¶</a></h3>
+<p><strong>HttpResponse对象的常用属性</strong></p>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/eric_yi/p/8046586.html">https://www.cnblogs.com/eric_yi/p/8046586.html</a></p>
+<p><a class="reference external" href="https://docs.djangoproject.com/zh-hans/3.2/ref/request-response/">https://docs.djangoproject.com/zh-hans/3.2/ref/request-response/</a></p>
+<p>常用的状态码 status_code表</p>
+<p><a class="reference external" href="https://docs.python.org/3/library/http.html#http.HTTPStatus">https://docs.python.org/3/library/http.html#http.HTTPStatus</a></p>
+<p>演示HttpResponse对象的用法</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/views.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_response</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">()</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;hello django&quot;</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Content-type&#39;</span><span class="p">])</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">charset</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">app2/urls.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/test_response/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">test_response</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>打开浏览器访问： <a class="reference external" href="http://127.0.0.1:8000/app2/test_response/">http://127.0.0.1:8000/app2/test_response/</a></p>
+<p>界面效果</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hello</span> <span class="n">django</span>
+<span class="n">hello</span> <span class="n">django</span>
+
+<span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">;</span> <span class="n">charset</span><span class="o">=</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span>
+<span class="mi">200</span>
+<span class="n">utf</span><span class="o">-</span><span class="mi">8</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">2.2.3. </span>3. 视图处理函数的使用</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>通过HttpRequest对象和HttpResponse对象，可以处理基本的数据请求并返回响应数据。但是这种方式繁琐，Django封装了几个简单的函数供我们使用。</p>
+<section id="render">
+<h3><a class="toc-backref" href="#id11">3.1 用render()函数实现页面渲染</a><a class="headerlink" href="#render" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>render(request, template_name, context=None, content_type=None, status=None, using=None)¶
+将给定的模板与给定的上下文字典组合在一起，并以渲染的文本返回一个 HttpResponse 对象。
+
+Django没有提供返回 TemplateResponse 的便捷函数，因为 TemplateResponse 的构造函数提供了与render()同等程度的便利。
+</pre></div>
+</div>
+<p>代码示例</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/views.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+
+<span class="c1"># Create your views here.</span>
+
+<span class="k">def</span> <span class="nf">test_render</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;2/test_render.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="s1">&#39;hello django&#39;</span><span class="p">},</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;text/html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">template/2/test_render.html</span></code></p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    接收变量
+    <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+    {{ info }}
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">app2/urls.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/test_render/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">test_render</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>访问：<a class="reference external" href="http://127.0.0.1:8000/app2/test_render/">http://127.0.0.1:8000/app2/test_render/</a></p>
+<p>页面显示</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">接收变量</span>
+<span class="n">hello</span> <span class="n">django</span>
+</pre></div>
+</div>
+</section>
+<section id="redirect">
+<h3><a class="toc-backref" href="#id12">3.2 使用redirect()函数实现页面重定向</a><a class="headerlink" href="#redirect" title="Permalink to this headline">¶</a></h3>
+<p>日常开发中，如果网页结构发生变化，就需要做重定向，如果不做重定向，就会得到一个404页面错误消息。</p>
+<p>Django中redirect()函数实现网页重定向，该函数的参数包括以下3种情况。</p>
+<ul class="simple">
+<li><p>一个模型：模型的
+<code class="docutils literal notranslate"><span class="pre">`get_absolute_url()</span></code> &lt;<a class="reference external" href="https://docs.djangoproject.com/zh-hans/3.2/ref/models/instances/#django.db.models.Model.get_absolute_url">https://docs.djangoproject.com/zh-hans/3.2/ref/models/instances/#django.db.models.Model.get_absolute_url</a>&gt;`__
+函数将被调用。</p></li>
+<li><p>视图名，可能带有的参数：<code class="docutils literal notranslate"><span class="pre">`reverse()</span></code> &lt;<a class="reference external" href="https://docs.djangoproject.com/zh-hans/3.2/ref/urlresolvers/#django.urls.reverse">https://docs.djangoproject.com/zh-hans/3.2/ref/urlresolvers/#django.urls.reverse</a>&gt;`__
+将被用于反向解析名称。</p></li>
+<li><p>一个绝对或相对 URL，将按原样用作重定向位置。</p></li>
+</ul>
+<p>（1）通过调用<code class="docutils literal notranslate"><span class="pre">`get_absolute_url()</span></code> &lt;<a class="reference external" href="https://docs.djangoproject.com/zh-hans/3.2/ref/models/instances/#django.db.models.Model.get_absolute_url">https://docs.djangoproject.com/zh-hans/3.2/ref/models/instances/#django.db.models.Model.get_absolute_url</a>&gt;`__
+函数进行重定向</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/models.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+
+
+<span class="k">class</span> <span class="nc">UserBaseInfo</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;编号&#39;</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;用户名称&#39;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;密码&#39;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;状态&#39;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">createdate</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;创建日期&#39;</span><span class="p">,</span> <span class="n">db_column</span><span class="o">=</span><span class="s1">&#39;createDate&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_absolute_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;app2_userinfo&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk</span><span class="p">})</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">verbose_name</span> <span class="o">=</span> <span class="s1">&#39;人员基本信息&#39;</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s1">&#39;UserBaseInfo2&#39;</span>
+</pre></div>
+</div>
+<p>代码定义了get_absolute_url()方法，用于返回模型对外的URL；使用reverse()函数做反向解析操作。</p>
+<p>迁移数据库</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">makemigrations</span>
+<span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">migrate</span>
+</pre></div>
+</div>
+<p>新增test_redirect_model()和userinfo()视图函数</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/views.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">UserBaseInfo</span>
+
+
+<span class="k">def</span> <span class="nf">test_redirect_model</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">UserBaseInfo</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">userinfo</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">UserBaseInfo</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;编号：&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; 姓名：&quot;</span> <span class="o">+</span> <span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>配置路由规则</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/urls.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/test_redirect_model/&lt;int:id&gt;/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">test_redirect_model</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;app2_test_redirect_model&#39;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/userinfo/&lt;int:id&gt;/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">userinfo</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;app2_userinfo&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>访问：<a class="reference external" href="http://127.0.0.1:8000/app2/test_redirect_model/1">http://127.0.0.1:8000/app2/test_redirect_model/1</a>/时会执行test_redirect_model()视图函数,redirect()函数包含一个模型实例。因此会调用该模型实例的get_absolute_url()方法，
+get_absolute_url()方法通过reverse()函数做反向解析，组装出<code class="docutils literal notranslate"><span class="pre">app2/userinfo/1/</span></code>这样的路由规则，然后根据规则找到对应的userinfo()视图函数.结果如下</p>
+<p>此信息是手动添加在数据库中的内容，用于测试。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>编号：1 姓名：hujianli
+</pre></div>
+</div>
+<p>（2）通过路由反向解析进行重定向</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/views,py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+
+<span class="c1"># Create your views here.</span>
+<span class="k">def</span> <span class="nf">test_redirect_views</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;app2_userinfo&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>redirect()函数直接反向解析路由的效果与reverse()函数的效果一样。</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/urls.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/test_redirect_model/&lt;int:id&gt;/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">test_redirect_model</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;app2_test_redirect_model&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>访问：<a class="reference external" href="http://127.0.0.1:8000/app2/userinfo/1/">http://127.0.0.1:8000/app2/userinfo/1/</a></p>
+<p>（3）一个绝对或相对 URL，将按原样用作重定向位置。</p>
+<p><code class="docutils literal notranslate"><span class="pre">app2/views.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+
+<span class="c1"># Create your views here.</span>
+
+<span class="k">def</span> <span class="nf">test_redirect</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;https://www.phei.com.cn/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">app2/urls.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;app2/test_redirect/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">test_redirect</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;app2_test_redirect&#39;</span><span class="p">),</span>
+
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>此时访问http://127.0.0.1:8000/app2/test_redirect时，会自动重定向到电子工业出版社的网站了。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="1.%E8%AE%A4%E8%AF%86%E8%B7%AF%E7%94%B1.html" class="btn btn-neutral float-left" title="2.1. 认识路由" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="3.%E8%AE%A4%E8%AF%86%E8%A7%86%E5%9B%BE%E7%B1%BB.html" class="btn btn-neutral float-right" title="2.3. 认识视图类" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
